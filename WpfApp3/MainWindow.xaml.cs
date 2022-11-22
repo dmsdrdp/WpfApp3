@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -83,7 +85,32 @@ namespace WpfApp3
             {
                 textBox.Foreground = Brushes.Red;
             }
-        } 
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)                      // открытие файла
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter="Текстовые файлы (*txt)|*.txt|Все файлы (*.*)|*.*";
+            if (openFileDialog.ShowDialog()==true)
+            {
+                textBox.Text = File.ReadAllText(openFileDialog.FileName);
+            }
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)                // сохранение файла
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter= "Текстовые файлы (*txt)|*.txt|Все файлы (*.*)|*.*";
+            if (saveFileDialog.ShowDialog()==true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, textBox.Text);
+            }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)              //выход из приложения 
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
  
